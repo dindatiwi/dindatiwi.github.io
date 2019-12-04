@@ -1,0 +1,23 @@
+{
+    "name": "My Football News",
+    "short_name": "PWA Submission",
+    "description": "Aplikasi PWA Informasi Sepak Bola",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "background_color": "#745c97",
+    "theme_color": "#745c97",
+    "gcm_sender_id": "279534096032",
+    "icons": [
+        {
+          "src": "icon2.png",
+          "sizes": "409x409",
+          "type": "image/png"
+        },
+        {
+          "src": "icon2.png",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    
+}
