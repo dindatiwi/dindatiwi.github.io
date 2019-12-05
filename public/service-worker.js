@@ -1,12 +1,10 @@
-const CACHE_NAME = "footballnews";
+// const CACHE_NAME = "footballnews";
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 if (workbox)
   console.log(`Workbox berhasil dimuat`);
 else
   console.log(`Workbox gagal dimuat`);
-
-
 workbox.precaching.precacheAndRoute([
   { url: '/index.html', revision: '1' },
   { url: '/nav.html', revision: '1' },
@@ -24,41 +22,24 @@ workbox.precaching.precacheAndRoute([
 ]);
 
 workbox.routing.registerRoute(
-  new RegExp('/pages/'),
-    workbox.strategies.staleWhileRevalidate({
-        cacheName: 'pages'
-    })
+  new RegExp('https://api.football-data.org/v2/'),
+    workbox.strategies.staleWhileRevalidate()
 );
 
 
-self.addEventListener('fetch', (event) => {
-  event.respondWith(async function () {
-    const cache = await caches.open(CACHE_NAME);
-    const cachedResponse = await cache.match(event.request);
-    if (cachedResponse) return cachedResponse;
-    const networkResponse = await fetch(event.request);
-    event.waitUntil(
-      cache.put(event.request, networkResponse.clone())
-    );
-    return networkResponse;
-  }());
-});
+// self.addEventListener('fetch', (event) => {
+//   event.respondWith(async function () {
+//     const cache = await caches.open(CACHE_NAME);
+//     const cachedResponse = await cache.match(event.request);
+//     if (cachedResponse) return cachedResponse;
+//     const networkResponse = await fetch(event.request);
+//     event.waitUntil(
+//       cache.put(event.request, networkResponse.clone())
+//     );
+//     return networkResponse;
+//   }());
+// });
 
-
-  self.addEventListener("activate", function(event) {
-    event.waitUntil(
-      caches.keys().then(function(cacheNames) {
-        return Promise.all(
-          cacheNames.map(function(cacheName) {
-            if (cacheName != CACHE_NAME) {
-              console.log("ServiceWorker: cache " + cacheName + " dihapus");
-              return caches.delete(cacheName);
-            }
-          })
-        );
-      })
-    );
-  });
 
 
   self.addEventListener('push', function(event) {

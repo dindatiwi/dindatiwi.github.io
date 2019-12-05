@@ -1,6 +1,7 @@
-let base_url = "https://api.football-data.org/v2/competitions/2015/matches";
-var teamz = "https://api.football-data.org/v2/competitions/2015/teams";
-let teamS
+var base_url = "https://api.football-data.org/v2/";
+var match_url = `${base_url}competitions/2015/matches`;
+var team_url = `${base_url}competitions/2015/teams`;
+let teamS;
 
 
 function fetchWithToken(url){
@@ -31,7 +32,7 @@ function error(error){
 
 function getArticles(){
     if('caches' in window){
-        caches.match(base_url).then(function(response){
+        caches.match(match_url).then(function(response){
             if(response){
                 response.json().then(function(data){
                     var articlesHTML = "";
@@ -52,7 +53,7 @@ function getArticles(){
             }
         });
     }
-    fetchWithToken(base_url)
+    fetchWithToken(match_url)
     .then(status)
     .then(json)
     .then(function(data){
@@ -81,7 +82,7 @@ function getArticles(){
 
 function getTeams(){
     if('caches' in window){
-        caches.match(teamz).then(function(response){
+        caches.match(team_url).then(function(response){
             if(response){
                 response.json().then(function(data){
                     var teamsHTML = "";
@@ -106,7 +107,7 @@ function getTeams(){
             }
         });
     }
-    fetchWithToken(teamz)
+    fetchWithToken(team_url)
     .then(status)
     .then(json)
     .then(function(data){
